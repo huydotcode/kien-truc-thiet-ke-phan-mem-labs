@@ -1,0 +1,17 @@
+{
+  "name": "lab-03",
+  "version": "1.0.0",
+  "description": "Design Pattern\r Thực hành: Observer Composite Adapter\r Mục tiêu: Hiểu và áp dụng các Design Pattern đúng trong từng trường hợp cụ thể\r Cho các mô tả sau:\r \"Bạn được giao nhiệm vụ xây dựng một hệ thống quản lý thư mục và tập tin theo mô hình cây (tree structure). Trong hệ thống này:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}

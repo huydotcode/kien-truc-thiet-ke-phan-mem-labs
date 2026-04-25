@@ -1,0 +1,35 @@
+# ============================================================
+# Máy HUY (192.168.137.64)
+#   - booking-service          (port 8083 ra LAN)
+#
+# Phụ thuộc: Postgres + RabbitMQ trên máy Trường (HOST_INFRA).
+#
+# Chạy:    docker compose -f huy-booking.yml --env-file .env up -d --build
+# Logs:    docker compose -f huy-booking.yml logs -f booking-service
+# Stop:    docker compose -f huy-booking.yml down
+# ============================================================
+
+services:
+  booking-service:
+    build:
+      context: ../../booking-service
+    container_name: mt-booking-service
+    restart: unless-stopped
+    ports:
+      - "8083:8083"            # Cho api-gateway gọi tới
+    environment:
+      DB_HOST: ${HOST_INFRA}
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME:-movieticket}
+      DB_PASSWORD: ${DB_PASSWORD:-movieticket}
+      RABBITMQ_HOST: ${HOST_INFRA}
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME:-movieticket}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-movieticket}
+      JWT_SECRET: ${JWT_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8083/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 90s
